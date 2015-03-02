@@ -4,16 +4,13 @@ namespace OAuth2\Storage;
 
 use OAuth2\OpenID\Storage\UserClaimsInterface;
 use OAuth2\OpenID\Storage\AuthorizationCodeInterface as OpenIDAuthorizationCodeInterface;
+use DLEngine\Services;
 
 /**
  * Simple PDO storage for all storage types
  *
- * NOTE: This class is meant to get users started
- * quickly. If your application requires further
- * customization, extend this class or create your own.
- *
- * NOTE: Passwords are stored in plaintext, which is never
- * a good idea.  Be sure to override this for your application
+ * Modified from original for Digital Living use. Uses AuthService
+ * to check usernames and passwords.
  *
  * @author Brent Shaffer <bshafs at gmail dot com>
  */
@@ -213,10 +210,13 @@ class Pdo implements
     }
 
     /* OAuth2\Storage\UserCredentialsInterface */
+    /* OAuth2\Storage\UserCredentialsInterface */
     public function checkUserCredentials($username, $password)
     {
+        require_once($_SERVER['DOCUMENT_ROOT']."/includes/services/AuthService.php");
         if ($user = $this->getUser($username)) {
-            return $this->checkPassword($user, $password);
+            $AuthService = new \DLEngine\Services\AuthService();
+            return $AuthService->validatePassword($username, $password);
         }
 
         return false;
