@@ -59,7 +59,7 @@ class Pdo implements
             'access_token_table' => 'oauth_access_tokens',
             'refresh_token_table' => 'oauth_refresh_tokens',
             'code_table' => 'oauth_authorization_codes',
-            'user_table' => 'oauth_users',
+            'user_table' => 'users',
             'jwt_table'  => 'oauth_jwt',
             'jti_table'  => 'oauth_jti',
             'scope_table'  => 'oauth_scopes',
